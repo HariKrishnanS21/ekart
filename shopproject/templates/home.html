@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="bg" style="background-image:url({% static 'img/banner2.png' %})"><br><br>
+    <div align="center" >
+        <h1 style="color:white;font-size:75px"><b><strong>NATURE TO HOME........<i style="color:forestgreen" class="fa fa-leaf"></i></strong></b></h1>
+        <h2 style="color:firebrick;font-size:35px"><b><strong>Forest Store</strong></b></h2>
+    </div>
+    {% if user.is_authenticated %}
+        <div align="center" class="u">
+            <p style="color:white;font-size:40px;text-align:center">
+                hello, {{user.username}}
+            </p>
+        </div>
+    {% else %}
+        <div align="center" class="form1" >
+            <form action="{% url 'cart:login' %}" method="post">
+                {% csrf_token %}
+                    <div class="display-2 " align="center">
+                        <h2 class="h"><b>JOIN OUR FAMILY</b></h2>
+                    </div>
+                      <div class="form-group" >
+                          <i class="fa fa-user" style="font-size:25px"></i> <input class=" input1" name="username" type="email"  id="exampleInputEmail1" aria-describedby="emailHelp" >
+                      </div>
+                      <div class="form-group">
+                          <i class="fa fa-lock" style="font-size:25px"></i> <input class="input" name="password" type="password"  id="exampleInputPassword1" >
+                      </div>
+                      <div class="form-check">
+                          <a type="label" href="" style="color:lime"><b>forgot password</b></a>
+                          <a type="label" href="{% url 'cart:register' %}" style="color:springgreen"><b>New user click here</b> </a>
+                      </div><br><br>
+                  <button style="border-radius:10px" type="submit" class="btn btn-success">login</button>
+        </form>
+        {% for m in messages %}
+            {% if m.tags == 'error' %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <strong>{{ m }}</strong>
+            </div>
+            {% endif %}
+        {% endfor %}
+        </div>
+    {% endif %}
+            <div class="about" >
+                <h1 align="center" style="color:"><b>About Us</b></h1>
+                <strong><p class="text"><b>This FOREST STORE is the part of a movement to empower the Tribal people all across the country.This movement bring up the products collected and made by the Tribal people from the Nature to your home.The product can be trusted and 100% natural.The income generated is fully contribute to progress of these people, we only pave the way for them to connect to you</b></p></strong>
+            </div>
+</div>
+{% endblock %}

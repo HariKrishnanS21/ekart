@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div>
+    <h4 align="center" class="display-5" style="color:firebrick">Your search results for <b>"{{ query }}"</b></h4>
+</div>
+<div class="container" >
+    <div class="row mx-auto" >
+        {% for c in product %}
+        <div class="col-md-auto">
+            <div class="card" style="width: 18rem;">
+              <img height="250" src="{{c.img.url}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{c.name}}</h5>
+                <h6>{{c.price}}</h6>
+
+                <a href="{{c.get_url}}" class="btn btn-success">Details</a>
+              </div>
+            </div>
+        </div>
+        {% empty %}
+            <div class="alert alert-success" align="center">
+                <p class="display-4"> oops....! There is no search results on your query</p><i class="fa-solid fa-face-downcast-sweat"></i>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

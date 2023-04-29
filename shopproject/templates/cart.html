@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if not cart_items %}
+<div style="background-image:url('{% static 'img/cartimage.png' %}')">
+<div role="heading">
+    <h1 style="color:white;background-color:black" align="center"><b>YOUR CART</b><a><i class="fa-duotone fa-cart-shopping"></i></a></h1>
+</div>
+<br><br><br><br><br><br><br>
+<div class="container-fluid">
+    <div class="row mx-auto" >
+        <div class="col align-self-start">
+
+        </div>
+        <div class="col align-self-center">
+            <div class="alert alert-success" style="font-size:30px" align="center" role="alert">
+                <p><strong>Your Cart is empty !!!!</strong></p>
+            </div>
+        </div>
+        <div class="col align-self-end">
+
+        </div>
+    </div>
+</div><br><br><br><br><br><br><br><br>
+{% else %}
+<div style="background-image:url('{% static 'img/cartimage.png' %}')">
+<div role="heading" align="center">
+    <h1 style="color:white;background-color:black;font-size:35px">YOUR CART</h1>
+</div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col md-8">
+            <br><br>
+            <table width="800px" class="table1">
+                <thead>
+                    <tr>
+                        <th colspan="5" style="background-color:grey">
+                            <h5 align="center"><strong>YOUR ITEMS</strong></h5>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody style="background-color:springgreen">
+                    {% for cart_item in cart_items %}
+                    <tr>
+                        <td>
+                            <a href="{{ cart_item.pro.get_url }}"><img src="{{ cart_item.pro.img.url }}" width="200 px" height="200px" class="float-left rounded"></a>
+                        </td>
+                        <td>
+                            <p align="center"><strong>{{ cart_item.pro.name }}</strong></p>
+                                   <p align="center"> price: {{ cart_item.pro.price }}</p>
+                            <p align="center">items: {{ cart_item.quantity }}</p>
+                            <p align="center">total: {{ cart_item.sub_total }}</p>
+
+                        </td>
+                        <td>
+                            <div align="center">
+                                <button class="btn btn-danger">Buy Now</button>
+                            </div>
+                        </td>
+                        {% if cart_item.quantity < cart_item.pro.stocks %}
+                        <td>
+                            <a href="{% url 'cart:add_cart' cart_item.pro.id %}"><i class="fa fa-plus"></i></a>
+                            &nbsp;<a href="{% url 'cart:item_remove' cart_item.pro.id %}"><i class="fa fa-minus"></i></a>
+                            &nbsp;<a href="{% url 'cart:remove' cart_item.pro.id %}"><i class="fa fa-trash"></i></a>
+                        </td>
+                        {% else %}
+                        <td>
+                            &nbsp;<a href="{% url 'cart:item_remove' cart_item.pro.id %}"><i class="fa fa-minus"></i></a>
+                            &nbsp;<a href="{% url 'cart:remove' cart_item.pro.id %}"><i class="fa fa-trash"></i></a>
+                        </td><br>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col md-4" >
+            <br><br>
+            <div style="background-color:tomato;height:500 px" >
+            <div role="heading">
+                <h3 style="background-color:grey"><b><center>summary</center></b></h3><br><br><br><br>
+            </div>
+            <div align="center">
+                <strong>Total products on cart :{{ counter }}</strong><br>
+                <strong>Total amount to be pay :Rs {{ total }}</strong>
+            </div><br><br>
+                <div align="center">
+                    <button class="btn btn-success">proceed to buy</button>
+                </div><br><br><br><br>
+            </div>
+        </div>
+    </div>
+</div>
+</div><br><br>
+{% endif %}
+{% endblock %}

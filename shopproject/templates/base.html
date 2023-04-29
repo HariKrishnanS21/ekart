@@ -1,0 +1,163 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/solid.min.css" integrity="sha512-uj2QCZdpo8PSbRGL/g5mXek6HM/APd7k/B5Hx/rkVFPNOxAQMXD+t+bG4Zv8OAdUpydZTU3UHmyjjiHv2Ww0PA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Forest Store</title>
+    <style>
+        .table1{
+            border:2px;
+            border-color:teal;
+
+        }
+        .form_input{
+            width:350px;
+
+        }
+        .bg{
+
+            background-size:contain;
+            background-repeat:no-repeat;
+
+        }
+        .about{
+            padding:50px;
+            background:rgba(80,255,155,0.8);
+            height:550px;
+
+        }
+        .text{
+
+            padding-left:12%;
+            font-size:25px;
+            color:darkslategrey;
+        }
+        .form1{
+            margin-top:50px;
+            background:rgba(105,105,105,0.5);
+            width:350px;
+            height:450px;
+            margin-left:37%;
+            border-radius:25px;
+
+        }
+        .u{
+            margin-top:50px;
+            background:rgba(105,105,105,0.5);
+            width:550px;
+            height:150px;
+            margin-left:37%;
+            border-radius:25px;
+
+        }
+        .h{
+            color:white;
+            padding:10px;
+        }
+        .input{
+            width:300px;
+            height:30px;
+            padding-top:30px;
+            margin-top:22px;
+            padding-left:25px;
+            background:rgba(230,230,250,0.9);
+            border:none;
+            border-radius:15px;
+
+        }
+        .input1{
+            width:300px;
+            height:30px;
+            margin-top:50px;
+            padding-top:20px;
+            padding-left:25px;
+            background:rgba(230,230,250,0.9);
+            border:none;
+            border-radius:15px;
+
+
+        }
+
+    </style>
+</head>
+<body>
+<div>
+
+<!--    header section-->
+<!--    <div>-->
+<!--        <header style="background-color:wheat">-->
+<!--            -->
+<!--        </header>-->
+<!--    </div>-->
+
+<!--    navbar-->
+<nav class="navbar navbar-expand-lg " style="background-color:teal">
+  <div class="container-fluid">
+      <div class="navbar-brand" align="center">
+            <center>
+                <img src="{% static 'img/logo.png' %}" width="100px" height="80px">
+            </center>
+       </div>
+    <a class="navbar-brand" href="{% url 'cart:home' %}" style="color:lime">Home</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link active" aria-current="page" href="#">Home</a>-->
+<!--        </li>-->
+<!--        <li class="nav-item">-->
+<!--          <a class="nav-link" href="#">Link</a>-->
+<!--        </li>-->
+        <li class="nav-item dropdown {% if 'cart' in request.path %} active {% endif %}">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="color:lime">
+            Shop
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              {% for c in link %}
+            <li><a class="dropdown-item" href="{{ c.get_url }}">{{ c.name }}</a></li>
+              {% endfor %}
+          </ul>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link " href="{% url 'cart:cart_details' %}" tabindex="-1" style="color:lime"><i style="color:lightcyan;font-size:19px" class="fa fa-shopping-cart"></i>{% if item_count > 0 %}({{ item_count }}){% endif %}</a>
+        </li>
+        {% if user.is_authenticated %}
+
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'cart:logout' %}" style="color:lime">logout</a>
+            </li>
+          {% endif %}
+      </ul>
+
+      <form class="d-flex" method="get" action="{% url 'cart:search' %}">
+        <input class="form-control me-2" type="search" placeholder="Search" name="q" aria-label="Search" >
+        <button class="btn btn-outline-success" type="submit" style="color:lime">Search</button>
+      </form>
+    </div>
+  </div>
+</nav>
+
+<!--    content block-->
+    {% block content %}
+    {% endblock %}
+
+
+<!--    footer_section-->
+    <div>
+        <footer style="background-color:forestgreen">
+            <center>
+                <p> &copy;Forest store pvt Ltd.ALL RIGHTS RESERVED</p>
+            </center>
+        </footer>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

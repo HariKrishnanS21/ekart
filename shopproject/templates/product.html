@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %}
+<br><br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5" >
+            <div align="center">
+                <img height="350" src="{{ pro.img.url }}">
+            </div><br>
+            <div align="center">
+                <a class="btn btn-outline-success" href=""> BUy NoW</a>
+                <a class="btn btn-outline-secondary" href="{% url 'cart:add_cart' pro.id %}"> Add To Cart</a>
+            </div>
+        </div>
+        <div class="col-md-7">
+            <h2 style="color:brown"><b>{{pro.name}}</b></h2><br><br>
+            <h1><b>{{pro.price}}</b></h1><br><br>
+            <p style="font-size:20px ; color:indigo">{{pro.desc}}</p><br><br><br>
+            <h4><b>{{pro.stocks}} Stocks Are available...</b></h4><p>           Last updated on {{pro.udate}}</p>
+        </div>
+    </div>
+</div>
+<br><br><br>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% if cat %}
+<div class="alert alert-primary" role="heading" >
+    <h4 align="center" class="display-5" style="color:firebrick">{{cat.name}}</h4>
+</div>
+{% endif %}
+<div class="container" >
+    <div class="row" >
+        {% for c in product.object_list %}
+        <div class="col-md-auto">
+            <div class="card" style="width: 18rem;">
+              <img height="250" src="{{c.img.url}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{c.name}}</h5>
+                <h6>{{c.price}}</h6>
+
+                <a href="{{c.get_url}}" class="btn btn-success">Details</a>
+              </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<div class="pagination">
+    <div class="mx-auto">
+        {% if product.paginator.num_pages > 1 %}
+        <hr>
+        <div class="text-center">
+            {% for pg in product.paginator.page_range %}
+                <a href="?page={{pg}}" class="btn btn-success btn-sm {% if product.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
